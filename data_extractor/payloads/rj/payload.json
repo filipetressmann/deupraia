@@ -1,0 +1,171 @@
+{
+    "version": "1.0.0",
+    "queries": [{
+        "Query": {
+            "Commands": [{
+                "SemanticQueryDataShapeCommand": {
+                    "Query": {
+                        "Version": 2,
+                        "From": [{
+                            "Name": "f1",
+                            "Entity": "fDISEQ_Balneabilidade_Praias",
+                            "Type": 0
+                        }, {
+                            "Name": "f",
+                            "Entity": "fDISEQ_QPraias",
+                            "Type": 0
+                        }],
+                        "Select": [{
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "f1"
+                                    }
+                                },
+                                "Property": "Classificação"
+                            },
+                            "Name": "fDISEQ_QPraias_Automatico.Classificação",
+                            "NativeReferenceName": "Classificação"
+                        }, {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "f1"
+                                    }
+                                },
+                                "Property": "Latitude "
+                            },
+                            "Name": "Avg(fDISEQ_QPraias_Automatico.Latitude )",
+                            "NativeReferenceName": "Latitude "
+                        }, {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "f1"
+                                    }
+                                },
+                                "Property": "Longitude"
+                            },
+                            "Name": "Avg(fDISEQ_QPraias_Automatico.Longitude)",
+                            "NativeReferenceName": "Longitude"
+                        }, {
+                            "Aggregation": {
+                                "Expression": {
+                                    "Column": {
+                                        "Expression": {
+                                            "SourceRef": {
+                                                "Source": "f1"
+                                            }
+                                        },
+                                        "Property": "Praia"
+                                    }
+                                },
+                                "Function": 3
+                            },
+                            "Name": "Min(fDISEQ_QPraias_Automatico.Praia)",
+                            "NativeReferenceName": "Praia"
+                        }, {
+                            "Aggregation": {
+                                "Expression": {
+                                    "Column": {
+                                        "Expression": {
+                                            "SourceRef": {
+                                                "Source": "f1"
+                                            }
+                                        },
+                                        "Property": "Data da coleta"
+                                    }
+                                },
+                                "Function": 3
+                            },
+                            "Name": "Min(fDISEQ_Balneabilidade_Praias.Data da coleta)",
+                            "NativeReferenceName": "Data da coleta mais recente"
+                        }],
+                        "Where": [{
+                            "Condition": {
+                                "In": {
+                                    "Expressions": [{
+                                        "Column": {
+                                            "Expression": {
+                                                "SourceRef": {
+                                                    "Source": "f"
+                                                }
+                                            },
+                                            "Property": "Ano"
+                                        }
+                                    }],
+                                    "Values": [
+                                        [{
+                                            "Literal": {
+                                                "Value": "'2023'"
+                                            }
+                                        }]
+                                    ]
+                                }
+                            }
+                        }, {
+                            "Condition": {
+                                "Not": {
+                                    "Expression": {
+                                        "In": {
+                                            "Expressions": [{
+                                                "Column": {
+                                                    "Expression": {
+                                                        "SourceRef": {
+                                                            "Source": "f1"
+                                                        }
+                                                    },
+                                                    "Property": "Classificação"
+                                                }
+                                            }],
+                                            "Values": [
+                                                [{
+                                                    "Literal": {
+                                                        "Value": "''"
+                                                    }
+                                                }]
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }]
+                    },
+                    "Binding": {
+                        "Primary": {
+                            "Groupings": [{
+                                "Projections": [0, 1, 2, 3, 4]
+                            }]
+                        },
+                        "DataReduction": {
+                            "DataVolume": 4,
+                            "Primary": {
+                                "OverlappingPointsSample": {
+                                    "X": {
+                                        "Index": 2
+                                    },
+                                    "Y": {
+                                        "Index": 1
+                                    }
+                                }
+                            }
+                        },
+                        "SuppressedJoinPredicates": [3, 4],
+                        "Version": 1
+                    },
+                    "ExecutionMetricsKind": 1
+                }
+            }]
+        },
+        "QueryId": "",
+        "ApplicationContext": {
+            "DatasetId": "c9353be0-85cb-4f81-9b1e-ef5e121124f7",
+            "Sources": [{
+                "ReportId": "642f871e-cbd8-42f4-9cd6-3536460d67c2",
+                "VisualId": "2e9ed963ca9eab352a40"
+            }]
+        }
+    }],
+    "cancelQueries": [],
+    "modelId": 5721923
+}

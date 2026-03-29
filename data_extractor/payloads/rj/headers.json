@@ -1,0 +1,9 @@
+{
+    "Content-Type": "application/json",
+    "Origin": "https://app.powerbi.com",
+    "Referer": "https://app.powerbi.com/",
+    "User-Agent": "Mozilla/5.0",
+    "ActivityId": "d0e437ee-1cfa-3ac3-f414-f222070a7bda",
+    "RequestId": "8f68eab5-e237-1cf4-499c-f0a9512f00b7",
+    "X-PowerBI-ResourceKey": "5b801b31-4f49-43f5-a91f-ece742be0290"
+}

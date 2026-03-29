@@ -1,0 +1,108 @@
+{
+    "version": "1.0.0",
+    "queries": [{
+        "Query": {
+            "Commands": [{
+                "SemanticQueryDataShapeCommand": {
+                    "Query": {
+                        "Version": 2,
+                        "From": [{
+                            "Name": "b",
+                            "Entity": "Balneabilidade",
+                            "Type": 0
+                        }, {
+                            "Name": "t",
+                            "Entity": "Tabela",
+                            "Type": 0
+                        }],
+                        "Select": [{
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "b"
+                                    }
+                                },
+                                "Property": "CLASSIFICAÇÃO"
+                            },
+                            "Name": "Balneabilidade_03/05/2023.CLASSIFICAÇÃO"
+                        }, {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "b"
+                                    }
+                                },
+                                "Property": "LATITUDE"
+                            },
+                            "Name": "Balneabilidade.LATITUDE"
+                        }, {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "b"
+                                    }
+                                },
+                                "Property": "LONGITUDE"
+                            },
+                            "Name": "Balneabilidade.LONGITUDE"
+                        },
+                        {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "b"
+                                    }
+                                },
+                                "Property": "LOCAL DE COLETA"
+                            },
+                            "Name": "Balneabilidade.LOCAL DE COLETA"
+                        },
+                        {
+                            "Column": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Source": "b"
+                                    }
+                                },
+                                "Property": "Data"
+                            },
+                            "Name": "Balneabilidade.Data"
+                        }
+                        ]
+                    },
+                    "Binding": {
+                        "Primary": {
+                            "Groupings": [{
+                                "Projections": [0, 1, 2, 3, 4]
+                            }]
+                        },
+                        "DataReduction": {
+                            "DataVolume": 4,
+                            "Primary": {
+                                "OverlappingPointsSample": {
+                                    "X": {
+                                        "Index": 2
+                                    },
+                                    "Y": {
+                                        "Index": 1
+                                    }
+                                }
+                            }
+                        },
+                        "Version": 1
+                    },
+                    "ExecutionMetricsKind": 1
+                }
+            }]
+        },
+        "ApplicationContext": {
+            "DatasetId": "cac6703e-6d58-4311-b104-72b02d021c0b",
+            "Sources": [{
+                "ReportId": "03decddc-486c-43fa-83d9-cf74d7c457be",
+                "VisualId": "abd270a158c1b32eaa91"
+            }]
+        }
+    }],
+    "cancelQueries": [],
+    "modelId": 3196411
+}

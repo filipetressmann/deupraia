@@ -1,10 +1,11 @@
 from base_functions import explode_on, normalize_column, split_on, from_timestampms_to_datetime
+from power_bi_parser import parse_power_bi_data
 
 CONFIG = [
     {
         "url": "https://www.google.com/maps/d/kml?mid=1B2OWELqpzGee7_NO9SgzeDXf966YrYs",
         "format": "kmz",
-        "disambiguator": "Serra - ES -",
+        "disambiguator": "Espirito Santo -",
         "data_format_config": {
             "columns": ["Name", "geometry", "description"],
             "layers": ["IMPRÓPRIO", "PRÓPRIO"]
@@ -43,7 +44,7 @@ CONFIG = [
     {
         "url": "https://www.google.com/maps/d/kml?mid=1fBWO4Jm2j23dgMMG-GIN7zCuWKbGQlBZ&resourcekey&lid=00wi8bi5-X8",
         "format": "kmz",
-        "disambiguator": "Aracruz - ES -",
+        "disambiguator": "Espirito Santo -",
         "data_format_config": {
             "layers": None,
             "columns": ["geometry", "Name", "Situa____o", "Data_da___ltima_Coleta"]
@@ -72,7 +73,7 @@ CONFIG = [
         },
         "mappings": {
             "praia": "id",
-            "geometry": "location",
+            "location": "location",
             "data_amostra_inicio": "date",
             "classificacao_texto": "status"
         },
@@ -84,14 +85,11 @@ CONFIG = [
             "function": from_timestampms_to_datetime,
             "field": "data_amostra_inicio"
         }]
-    }
-]
-
-TEST_CONFIG = [
+    },
     {
         "url": "https://balneabilidade.ima.sc.gov.br/relatorio/mapa",
         "format": "json",
-        "disambiguator": "São Paulo -",
+        "disambiguator": "Santa Catarina - ",
         "data_format_config": {
             "path_to_array": [],
             "path_to_attributes": [],
@@ -118,5 +116,64 @@ TEST_CONFIG = [
                 "column": "ANALISES",
             }
         ]
+    },
+    {
+        "url": "https://wabi-brazil-south-api.analysis.windows.net/public/reports/querydata?synchronous=true",
+        "path": "./payloads/rj",
+        "format": "json",
+        "disambiguator": "Rio de Janeiro -",
+        "parser": parse_power_bi_data,
+        "data_format_config": {
+            "path_to_array": ["results", 0, "result", "data", "dsr", "DS", 0, "PH", 0, "DM0"],
+            "path_to_attributes": [],
+            "lat_path": [1],
+            "lng_path": [2]
+        },
+        "mappings": {
+            "3": "id",
+            "location": "location",
+            "4": "date",
+            "0": "status"
+        },
+        "status_mapping": {
+            "Imprópria": "IMPROPER",
+            "Própria": "PROPER"
+        },
+        "transforms": [{
+            "function": from_timestampms_to_datetime,
+            "field": "4"
+        }]
+    },
+    {
+        "url": "https://wabi-brazil-south-b-primary-api.analysis.windows.net/public/reports/querydata",
+        "path": "./payloads/es/vila-velha",
+        "format": "json",
+        "disambiguator": "Espirito Santo -",
+        "parser": parse_power_bi_data,
+        "data_format_config": {
+            "path_to_array": ["results", 0, "result", "data", "dsr", "DS", 0, "PH", 0, "DM0"],
+            "path_to_attributes": [],
+            "lat_path": [1],
+            "lng_path": [2]
+        },
+        "mappings": {
+            "3": "id",
+            "location": "location",
+            "4": "date",
+            "0": "status"
+        },
+        "status_mapping": {
+            "Sist. Imprópria": "IMPROPER",
+            "IMPRÓPRIA": "IMPROPER",
+            "PRÓPRIA": "PROPER"
+        },
+        "transforms": [{
+            "function": from_timestampms_to_datetime,
+            "field": "4"
+        }]
     }
+]
+
+TEST_CONFIG = [
+   
 ]

@@ -4,7 +4,7 @@ import sys
 from extractor_config import CONFIG, TEST_CONFIG
 from json_extractor import load_json_data
 from kmz_extractor import load_kmz_data
-from shapely.geometry import Point
+from shapely.geometry import Point, mapping
 
 format_mapping = {
     'kmz': load_kmz_data,
@@ -18,28 +18,32 @@ def load_data(config):
     return format_mapping[format](config)
 
 def get_data_for_config(config):
-    df = load_data(config)
+    try:
+        df = load_data(config)
 
-    transforms = config["transforms"]
+        transforms = config["transforms"]
 
-    for transform in transforms:
-        df = transform["function"](df, transform)
+        for transform in transforms:
+            df = transform["function"](df, transform)
 
-    mappings = config["mappings"]
+        mappings = config["mappings"]
+        
+        df = (
+            df[list(mappings.keys())]
+                .rename(columns=mappings)
+        )
 
-    df = (
-        df[list(mappings.keys())]
-            .rename(columns=mappings)
-    )
+        df['id'] = config['disambiguator']+ ' ' +  df['id'].astype(str)
+        df["location"] = df.location.apply(
+            lambda geom: Point(geom.x, geom.y)
+        )
 
-    df['id'] = config['disambiguator']+ ' ' +  df['id'].astype(str)
-    df["location"] = df.location.apply(
-        lambda geom: Point(geom.x, geom.y)
-    )
-
-    df["status"] = df["status"].map(config['status_mapping'])
-
-    return df
+        df["status"] = df["status"].map(config['status_mapping'])
+        return df
+    except Exception as e:
+        print("Failed for config: ", config)
+        print("Error: ", e)
+        raise e
 
 
 if __name__ == "__main__":
