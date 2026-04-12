@@ -27,24 +27,28 @@ def get_data_for_config(config):
             df = transform["function"](df, transform)
 
         mappings = config["mappings"]
-        
+
         df = (
             df[list(mappings.keys())]
                 .rename(columns=mappings)
         )
 
         df['id'] = config['disambiguator']+ ' ' +  df['id'].astype(str)
-        df["location"] = df.location.apply(
-            lambda geom: Point(geom.x, geom.y)
-        )
+        df['timestamp'] = pd.to_datetime(df['date'], dayfirst=True)
+
+        df = df.sort_values(by='timestamp')
+        df = df.drop_duplicates('id', keep='last')
+        
+        df["lat"] = df.location.apply(lambda geom: geom.y)
+        df["lng"] = df.location.apply(lambda geom: geom.x)
 
         df["status"] = df["status"].map(config['status_mapping'])
+        df = df.drop(columns=['location', 'timestamp'])
         return df
     except Exception as e:
         print("Failed for config: ", config)
         print("Error: ", e)
         raise e
-
 
 if __name__ == "__main__":
     is_test = len(sys.argv) > 1
@@ -52,4 +56,5 @@ if __name__ == "__main__":
     if is_test:
         configs = TEST_CONFIG
     df = pd.concat([get_data_for_config(config) for config in configs])
-    print(df.head(1000))
+    df.to_csv('output.csv', index=False)
+    print(df.head(10000))

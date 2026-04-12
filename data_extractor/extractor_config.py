@@ -56,8 +56,8 @@ CONFIG = [
             "Situa____o": "status"
         },
         "status_mapping": {
-            "IMPRÓPRIO": "IMPROPER",
-            "PRÓPRIO": "PROPER"
+            "Imprópria": "IMPROPER",
+            "Própria": "PROPER"
         },
         "transforms": []
     },
@@ -175,5 +175,24 @@ CONFIG = [
 ]
 
 TEST_CONFIG = [
-   
+   {
+        "url": "https://www.google.com/maps/d/kml?mid=1fBWO4Jm2j23dgMMG-GIN7zCuWKbGQlBZ&resourcekey&lid=00wi8bi5-X8",
+        "format": "kmz",
+        "disambiguator": "Espirito Santo -",
+        "data_format_config": {
+            "layers": None,
+            "columns": ["geometry", "Name", "Situa____o", "Data_da___ltima_Coleta"]
+        },
+        "mappings": {
+            "Name": "id",
+            "geometry": "location",
+            "Data_da___ltima_Coleta": "date",
+            "Situa____o": "status"
+        },
+        "status_mapping": {
+            "Imprópria": "IMPROPER",
+            "Própria": "PROPER"
+        },
+        "transforms": []
+    }
 ]
