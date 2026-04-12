@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useMapEvents, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { blueIcon } from './MapIcons';
+import { useTranslation } from 'react-i18next';
 
 function UserLocationMarker() {
     const [position, setPosition] = useState<L.LatLng | null>(null);
+    const { t } = useTranslation();
     const map = useMap();
 
     // 1. Move the locate call into useEffect with an empty dependency array
@@ -26,8 +29,11 @@ function UserLocationMarker() {
     });
 
     return position === null ? null : (
-        <Marker position={position}>
-            <Popup>You are here</Popup>
+        <Marker 
+            position={position}
+            icon={blueIcon}
+        >
+            <Popup>{t('user_location')}</Popup>
         </Marker>
     );
 }

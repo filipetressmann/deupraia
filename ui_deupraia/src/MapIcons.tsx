@@ -1,6 +1,7 @@
 import L from 'leaflet'
 import green from './assets/marker-icon-green.png';
 import red from './assets/marker-icon-red.png';
+import blue from './assets/marker-icon-blue.png';
 import shadow from './assets/marker-shadow.png';
 
 class StatusIcon extends L.Icon {
@@ -18,3 +19,4 @@ class StatusIcon extends L.Icon {
 
 export const greenIcon = new StatusIcon(green);
 export const redIcon = new StatusIcon(red);
+export const blueIcon = new StatusIcon(blue);

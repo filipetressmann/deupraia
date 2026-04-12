@@ -8,7 +8,8 @@ const resources = {
       "IMPROPER": "Unsafe",
       "last_updated": "Last updated on",
       "beach_name": "Beach name",
-      "result": "Classification"
+      "result": "Classification",
+      "user_location": "You are here!"
     }
   },
   pt: {
@@ -17,7 +18,8 @@ const resources = {
       "IMPROPER": "Imprópria",
       "last_updated": "Última atualização em",
       "beach_name": "Nome da praia",
-      "result": "Classificação"
+      "result": "Classificação",
+      "user_location": "Você está aqui!"
     }
   }
 };
