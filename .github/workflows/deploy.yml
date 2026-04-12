@@ -31,8 +31,8 @@ jobs:
           if [ -f ./data_extractor/requirements.txt ]; then pip install -r ./data_extractor/requirements.txt; fi
 
       - name: Run Extraction Script
-        run: 
-          cd data_extractor
+        working-directory: ./data_extractor
+        run:
           python extractor.py
 
       - name: Set up Node.js
@@ -40,11 +40,11 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-          cache-dependency-path: ui_deupraia/package-lock.json
+          cache-dependency-path: ./ui_deupraia/package-lock.json
 
       - name: Install JS dependencies and Build
+        working-directory: ./ui_deupraia
         run: |
-          cd ui_deupraia
           npm install
           npm run build
 
