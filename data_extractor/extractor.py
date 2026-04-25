@@ -56,5 +56,5 @@ if __name__ == "__main__":
     if is_test:
         configs = TEST_CONFIG
     df = pd.concat([get_data_for_config(config) for config in configs])
-    df.to_csv('../ui_deupraia/src/data/output.csv', index=False)
+    df.to_csv('../ui_deupraia/src/assets/output.csv', index=False)
     print(df.head(10000))

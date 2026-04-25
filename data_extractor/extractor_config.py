@@ -175,24 +175,31 @@ CONFIG = [
 ]
 
 TEST_CONFIG = [
-   {
-        "url": "https://www.google.com/maps/d/kml?mid=1fBWO4Jm2j23dgMMG-GIN7zCuWKbGQlBZ&resourcekey&lid=00wi8bi5-X8",
-        "format": "kmz",
-        "disambiguator": "Espirito Santo -",
+    {
+        "url": "https://wabi-brazil-south-api.analysis.windows.net/public/reports/querydata?synchronous=true",
+        "path": "./payloads/rj",
+        "format": "json",
+        "disambiguator": "Rio de Janeiro -",
+        "parser": parse_power_bi_data,
         "data_format_config": {
-            "layers": None,
-            "columns": ["geometry", "Name", "Situa____o", "Data_da___ltima_Coleta"]
+            "path_to_array": ["results", 0, "result", "data", "dsr", "DS", 0, "PH", 0, "DM0"],
+            "path_to_attributes": [],
+            "lat_path": [1],
+            "lng_path": [2]
         },
         "mappings": {
-            "Name": "id",
-            "geometry": "location",
-            "Data_da___ltima_Coleta": "date",
-            "Situa____o": "status"
+            "3": "id",
+            "location": "location",
+            "4": "date",
+            "0": "status"
         },
         "status_mapping": {
             "Imprópria": "IMPROPER",
             "Própria": "PROPER"
         },
-        "transforms": []
+        "transforms": [{
+            "function": from_timestampms_to_datetime,
+            "field": "4"
+        }]
     }
 ]

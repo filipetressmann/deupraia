@@ -1,7 +1,7 @@
 import { Marker, Popup, TileLayer } from "react-leaflet";
 import { MapContainer } from "react-leaflet";
 import Papa from 'papaparse';
-import beachDataCSV from './data/output.csv?raw';
+import beachDataCSV from './assets/output.csv?raw';
 import { useEffect, useState } from "react";
 import type { LatLngExpression } from "leaflet";
 import { useTranslation } from 'react-i18next';

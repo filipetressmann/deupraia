@@ -1,3 +1,5 @@
+import math
+
 import requests
 import json
 import pandas as pd 
@@ -6,6 +8,7 @@ from shapely.geometry import Point
 
 def load_json_data(config):
     data = get_data(config)
+    print(data)
     data_extractor_config = config["data_format_config"]
     path_to_array = data_extractor_config['path_to_array']
     
@@ -19,7 +22,8 @@ def load_json_data(config):
         attrs = normalize_attr(get_nested_item(item, data_extractor_config["path_to_attributes"]))
         lat = get_nested_item(item, data_extractor_config["lat_path"])
         lng = get_nested_item(item, data_extractor_config["lng_path"])
-
+        if not are_coordinates_valid(lat, lng):
+            continue
         rows.append({
             **attrs,
             "location": Point(lng, lat)
@@ -61,3 +65,11 @@ def normalize_attr(attrs):
         return {str(i): v for i, v in enumerate(attrs)}
     else:
         return {}
+    
+def are_coordinates_valid(lat, lng):
+    try:
+        c_lat = float(lat)
+        C_lng = float(lng)
+        return math.isfinite(c_lat) and math.isfinite(C_lng)
+    except (TypeError, ValueError):
+        return False
