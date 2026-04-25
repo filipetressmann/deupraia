@@ -8,7 +8,6 @@ from shapely.geometry import Point
 
 def load_json_data(config):
     data = get_data(config)
-    print(data)
     data_extractor_config = config["data_format_config"]
     path_to_array = data_extractor_config['path_to_array']
     

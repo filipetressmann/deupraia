@@ -14,5 +14,10 @@ def from_timestampms_to_datetime(df, args):
     return df
 
 def normalize_column(df, args):
-    df = df.join(pd.json_normalize(df[args["column"]]))
-    return df
+    df_clean = df.reset_index(drop=True)
+    normalized_column_df = pd.json_normalize(df_clean[args["column"]]).reset_index(drop=True)
+
+    return pd.concat(
+        [df_clean.drop(columns=[args["column"]]), normalized_column_df],
+        axis=1
+    )
