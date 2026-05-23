@@ -34,6 +34,7 @@ def get_data_for_config(config):
         )
 
         df['id'] = config['disambiguator']+ ' ' +  df['id'].astype(str)
+
         df['timestamp'] = pd.to_datetime(df['date'], dayfirst=True)
 
         df = df.sort_values(by='timestamp')

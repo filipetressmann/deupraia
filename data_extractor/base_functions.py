@@ -4,7 +4,15 @@ def explode_on(df, args):
     return df.explode(args["column"])
 
 def split_on(df, args):
-    df[args["output"]] = df[args["column"]].str.split(args["split_string"], expand=args["expand"])
+    column = args["column"]
+
+    df[column] = df[column].str.replace("\xa0", " ", regex=False)
+
+    df[args["output"]] = df[column].str.split(
+        args["split_string"],
+        expand=args["expand"]
+    )
+
     return df
 
 def from_timestampms_to_datetime(df, args):

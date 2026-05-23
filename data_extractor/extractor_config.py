@@ -176,20 +176,18 @@ CONFIG = [
 
 TEST_CONFIG = [
     {
-        "url": "https://balneabilidade.ima.sc.gov.br/relatorio/mapa",
-        "format": "json",
-        "disambiguator": "Santa Catarina - ",
+        "url": "https://www.google.com/maps/d/kml?mid=1B2OWELqpzGee7_NO9SgzeDXf966YrYs",
+        "format": "kmz",
+        "disambiguator": "Espirito Santo -",
         "data_format_config": {
-            "path_to_array": [],
-            "path_to_attributes": [],
-            "lat_path": ["LATITUDE"],
-            "lng_path": ["LONGITUDE"]
+            "columns": ["Name", "geometry", "description"],
+            "layers": ["IMPRÓPRIO", "PRÓPRIO"]
         },
         "mappings": {
-            "BALNEARIO": "id",
-            "location": "location",
-            "DATA": "date",
-            "CONDICAO": "status"
+            "Name": "id",
+            "geometry": "location",
+            "date": "date",
+            "status": "status",
         },
         "status_mapping": {
             "IMPRÓPRIO": "IMPROPER",
@@ -197,13 +195,23 @@ TEST_CONFIG = [
         },
         "transforms": [
             {
-                "function": explode_on,
-                "column": "ANALISES",
+                "function": split_on,
+                "column": "description",
+                "output": "entries",
+                "split_string": "<br>",
+                "expand": False
             },
             {
-                "function": normalize_column,
-                "column": "ANALISES",
-            }
+                "function": explode_on,
+                "column": "entries",
+            },
+            {
+                "function": split_on,
+                "column": "entries",
+                "output": ["date", "status"],
+                "split_string": " - ",
+                "expand": True
+            },
         ]
     }
 ]
