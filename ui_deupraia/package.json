@@ -16,7 +16,8 @@
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
     "react-i18next": "^17.0.2",
-    "react-leaflet": "^5.0.0-rc.2"
+    "react-leaflet": "^5.0.0-rc.2",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

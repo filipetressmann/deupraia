@@ -1,43 +1,42 @@
-import { Marker, Popup, TileLayer } from "react-leaflet";
-import { MapContainer } from "react-leaflet";
-import Papa from 'papaparse';
-import beachDataCSV from './assets/output.csv?raw';
-import { useEffect, useState } from "react";
+import { TileLayer, MapContainer, useMap } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
-import { useTranslation } from 'react-i18next';
 import './i18n';
-import { greenIcon, redIcon } from "./MapIcons";
 import UserLocationMarker from "./UserLocator";
+import type { BeachData } from "./BeachData";
+import { useEffect } from "react";
+import BeachMarker from "./BeachMarker";
 
-const center: LatLngExpression = [-23.0, -46.505]
+const defaultCenter: LatLngExpression = [-23.0, -46.505]
 const zoom = 6
 
-interface BeachData {
-  id: string;
-  lat: string;
-  lng: string;
-  date: string;
-  status: string;
+interface BeachMapProps {
+    points: BeachData[]
+    center: LatLngExpression | undefined
+    selectedBeach: string | undefined
 }
 
-function BeachMap() {
-    const { t } = useTranslation();
-    const [points, setPoints] = useState<BeachData[]>([]);
+interface MapControllerProps {
+    center: LatLngExpression | undefined
+}
+
+function MapController(props: MapControllerProps) {
+    const map = useMap();
 
     useEffect(() => {
-        Papa.parse(beachDataCSV, {
-            header: true,
-            skipEmptyLines: true,
-            complete: (results) => {
-                setPoints(results.data as BeachData[]);
-            },
-        });
-    }, []);
+        const center = props.center ?? defaultCenter
+        if (props.center) {
+            map.flyTo(center, 14)
+        }
+    }, [props.center, map]);
 
+    return null;
+}
+
+function BeachMap(props: BeachMapProps) {
     return (
         <>
             <MapContainer 
-                center={center} 
+                center={props.center ?? defaultCenter} 
                 zoom={zoom}
             >
                 <TileLayer 
@@ -46,26 +45,18 @@ function BeachMap() {
                 />
                 <UserLocationMarker />
 
-                {points.map((point, idx) => (
-                    <Marker 
-                        key={idx} 
-                        position={[parseFloat(point.lat), parseFloat(point.lng)]}
-                        icon={getIcon(point.status)}
-                    >
-                        <Popup>
-                            {t('beach_name')}: <strong>{point.id}</strong><br />
-                            {t('last_updated')}: {point.date}<br />
-                            {t('result')}: {t(point.status)}
-                        </Popup>
-                  </Marker>
+                <MapController center={props.center}/>
+
+                {props.points.map((point, idx) => (
+                    <BeachMarker 
+                        idx={idx} 
+                        beach={point}
+                        selected={point.id == props.selectedBeach}
+                    />
                 ))}
             </MapContainer>
         </>
     )
 }
-
-const getIcon = (status: string) => {
-  return status === 'PROPER' ? greenIcon : redIcon;
-};
 
 export default BeachMap;

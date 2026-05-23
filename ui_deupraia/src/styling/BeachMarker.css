@@ -1,0 +1,30 @@
+.popup-content {
+  min-width: 240px;
+  font-family: Arial, sans-serif;
+}
+
+.popup-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.popup-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.status-proper {
+  color: green;
+  font-weight: 600;
+}
+
+.status-improper {
+  color: red;
+  font-weight: 600;
+}

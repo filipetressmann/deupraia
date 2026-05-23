@@ -1,0 +1,30 @@
+.search-bar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, sans-serif;
+
+  z-index: 1000;
+
+  width: 320px;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    width: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    width: 180px;
+    top: 8px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .search-bar {
+    width: 420px;
+  }
+}

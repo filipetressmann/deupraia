@@ -9,19 +9,15 @@ function UserLocationMarker() {
     const { t } = useTranslation();
     const map = useMap();
 
-    // 1. Move the locate call into useEffect with an empty dependency array
     useEffect(() => {
         map.locate({
             watch: true,
         });
-    }, [map]); // Runs only once when the map instance is ready
+    }, [map]);
 
     useMapEvents({
         locationfound(location) {
-            if (!position) {
-                setPosition(location.latlng);
-                map.setView(location.latlng, 13);
-            }
+            setPosition(location.latlng);
         },
         locationerror() {
             console.log("Location access denied.");
