@@ -1,4 +1,4 @@
-import { TileLayer, MapContainer, useMap } from "react-leaflet";
+import { TileLayer, MapContainer, useMap, ZoomControl } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
 import './i18n';
 import UserLocationMarker from "./UserLocator";
@@ -38,13 +38,14 @@ function BeachMap(props: BeachMapProps) {
             <MapContainer 
                 center={props.center ?? defaultCenter} 
                 zoom={zoom}
+                zoomControl={false}
             >
                 <TileLayer 
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 <UserLocationMarker />
-
+                <ZoomControl position="bottomleft"/>
                 <MapController center={props.center}/>
 
                 {props.points.map((point, idx) => (
