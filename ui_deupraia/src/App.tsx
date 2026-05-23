@@ -28,7 +28,7 @@ function App() {
     <>
       <Helmet>
         <title>
-          Brazil Beach Water Quality Map
+          Mapa de Balneabilidade
         </title>
 
         <meta
